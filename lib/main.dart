@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro_app/screens/home_screen.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:pomodoro_app/screens/my_data_screen.dart';
 
-void main() {
+void main() async {
+  await initializeDateFormatting();
   runApp(const MyApp());
 }
 
@@ -12,7 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HomeScreen(),
+      title: "Pomodoro App",
+      home: MyDataScreen(),
     );
   }
 }

@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 formatSeconds(totalSeconds),
                 style: TextStyle(
-                    color: Colors.pink[300],
+                    color: Colors.orange[600],
                     fontSize: 80,
                     fontWeight: FontWeight.w500),
               ),
@@ -126,15 +126,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.green[200],
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(
+                          50,
+                        ),
+                        topRight: Radius.circular(
+                          50,
+                        ),
+                      ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Text(
-                          "pomodoros",
+                          "Pomodoros",
                           style: TextStyle(
-                            color: Colors.pink[300],
+                            color: Colors.orange[600],
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
                           ),
@@ -142,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text(
                           "$totalPomodoros",
                           style: TextStyle(
-                            color: Colors.pink[300],
+                            color: Colors.orange[600],
                             fontSize: 28,
                             fontWeight: FontWeight.w600,
                           ),
@@ -157,9 +167,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           },
                           child: const Text(
-                            'My pomodoros>>',
+                            'My Pomodoros>>',
                             style: TextStyle(
-                              color: Colors.orange,
+                              color: Colors.black,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
