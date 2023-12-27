@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int totalSeconds = 1500;
+  int totalSeconds = 3;
   bool isRunning = false;
   int totalPomodoros = 0;
   late Timer timer;
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void onTick(Timer timer) {
     if (totalSeconds == 0) {
       setState(() {
-        totalSeconds = 1500;
+        totalSeconds = 3;
         totalPomodoros = totalPomodoros + 1;
         isRunning = false;
       });
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void onRestartPressed() {
     setState(() {
-      totalSeconds = 1500;
+      totalSeconds = 3;
       isRunning = false;
       totalPomodoros = 0;
     });
