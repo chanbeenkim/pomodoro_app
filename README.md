@@ -1,16 +1,12 @@
-# pomodoro_app
+# Pomodoro App
+포도모로 앱입니다.
 
-A new Flutter project.
+## 🕓 앱 소개
+집중력 향상을 위한 25분 루틴 포모도로 앱입니다.
+또한 캘린더를 통해 오늘 내가 이룬 성과를 작성할 수 있습니다.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🖍️ 주요 기능
+#### 타이머
+#### 초기화
+#### 캘린더
+#### 성과 체크
