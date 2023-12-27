@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:pomodoro_app/event.dart';
 
 class MyDataScreen extends StatefulWidget {
   const MyDataScreen({
@@ -11,33 +12,43 @@ class MyDataScreen extends StatefulWidget {
 }
 
 class _MyDataScreenState extends State<MyDataScreen> {
-  DateTime selectedDay = DateTime(
-    DateTime.now().year,
-    DateTime.now().month,
-    DateTime.now().day,
-  );
+  late Map<DateTime, List<Event>> selectedEvents;
+  DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
+
+  @override
+  void initState() {
+    selectedEvents = {};
+    super.initState();
+  }
+
+  final TextEditingController _eventController = TextEditingController();
+
+  List<Event> _getEventsForDay(DateTime day) {
+    return selectedEvents[day] ?? [];
+  }
+
+  @override
+  void dispose() {
+    _eventController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green[100],
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.green[200],
         elevation: 0,
-        title: const Text(
-          'Calender',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
       ),
       body: Column(
         children: [
           TableCalendar(
             locale: 'ko_KR',
             focusedDay: focusedDay,
-            firstDay: DateTime(2023, 12, 1),
-            lastDay: DateTime(2023, 12, 31),
+            firstDay: DateTime.utc(2023, 12, 1),
+            lastDay: DateTime.utc(2023, 12, 31),
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
                 this.selectedDay = selectedDay;
@@ -49,17 +60,22 @@ class _MyDataScreenState extends State<MyDataScreen> {
             },
             calendarStyle: CalendarStyle(
               defaultTextStyle: const TextStyle(
-                color: Colors.grey,
+                color: Colors.black,
               ),
-              weekendTextStyle: const TextStyle(
-                color: Colors.grey,
+              markerSize: 10,
+              markerDecoration: const BoxDecoration(
+                color: Colors.orange,
+                shape: BoxShape.circle,
+              ),
+              weekendTextStyle: TextStyle(
+                color: Colors.grey.shade500,
               ),
               outsideDaysVisible: false,
               todayDecoration: BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.green,
+                  color: Colors.green.shade600,
                   width: 3,
                 ),
               ),
@@ -68,14 +84,65 @@ class _MyDataScreenState extends State<MyDataScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
+            eventLoader: _getEventsForDay,
+          ),
+          ..._getEventsForDay(selectedDay).map(
+            ((Event event) => ListTile(title: Text(event.title))),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton.extended(
+                backgroundColor: Colors.green,
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Add Event'),
+                    content: TextFormField(
+                      controller: _eventController,
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text(
+                          "Cancel",
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          if (_eventController.text.isEmpty) {
+                            // Navigator.pop(context);
+                            // return;
+                          } else {
+                            if (selectedEvents[selectedDay] != null) {
+                              selectedEvents[selectedDay]!.add(
+                                Event(title: _eventController.text),
+                              );
+                            } else {
+                              selectedEvents[selectedDay] = [
+                                Event(title: _eventController.text)
+                              ];
+                            }
+                            Navigator.pop(context);
+                            _eventController.clear();
+                            setState(() {});
+                            return;
+                          }
+                        },
+                        child: const Text(
+                          "OK",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                label: const Text("Add Event"),
+                icon: const Icon(Icons.add),
+              )
+            ],
           ),
         ],
       ),
     );
   }
-}
-
-class Event {
-  String title;
-  Event(this.title);
 }
